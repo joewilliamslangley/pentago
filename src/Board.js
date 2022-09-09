@@ -10,6 +10,7 @@ export default function Board() {
   const [blackIsNext, setblackIsNext] = useState(true)
   const [rotateNext, setRotateNext] = useState(false)
   const [selectedBlock, setSelectedBlock] = useState(null)
+  const [winStatus, setWinStatus] = useState(false)
 
   const block1 = circles.slice(0,9)
   const block2 = circles.slice(9,18)
@@ -74,27 +75,25 @@ export default function Board() {
     for (let i = 0; i < winningLines.length; i++) {
       const [a, b, c, d, e] = winningLines[i];
       if (circles[a] && circles[a] === circles[b] && circles[a] === circles[c] && circles[a] === circles[d] && circles[a] === circles[e]) {
-        return circles[a];
+        setWinStatus(true);
+        return 'Winner: ' + circles[a];
       }
     }
     return null;
   }
 
-  const winnerStatus = () => {
-    const winner = calculateWinner(circles)
-    if (winner) {
-      return 'Winner: ' + winner;
-    }
-  }
-
   const renderRotateBox = () => {
     if (rotateNext && selectedBlock !== null) {
       return (
-        <div className='rotate-box'>
+      <div className='rotate-box'>
         <button className='rotate-left' onClick={() => rotateBlock('anticlockwise')}>Rotate left</button>
         {renderSkipRotate()}
         <button className='rotate-right' onClick={() => rotateBlock('clockwise')}>Rotate right</button>
       </div>
+      )
+    } else if (rotateNext) {
+      return (
+        renderSkipRotate()
       )
     }
   }
@@ -104,7 +103,7 @@ export default function Board() {
     const anyBlocksEmpty = blocks.some(block => {
       return block.every(circle => circle === null)
     })
-    if (anyBlocksEmpty){
+    if (anyBlocksEmpty && !winStatus){
     return (
       <button className='skip' onClick={() => setRotateNext(!rotateNext)}>Skip</button>
     )
@@ -123,7 +122,17 @@ export default function Board() {
     setRotateNext(!rotateNext)
   }
 
-  console.log('selected block:' + selectedBlock)
+  const renderDialogue = () => {
+    if (rotateNext && selectedBlock === null) {
+      return "Choose a block to rotate"
+    } else if (rotateNext && selectedBlock !== null) {
+      return "Pick a rotation direction or choose a different block"
+    } else if (winStatus) {
+      return calculateWinner
+    } else {
+      return `${blackIsNext ? 'Black' : 'White'}'s turn to move`
+    }
+  }
 
   return (
     <div className="game">
@@ -134,8 +143,9 @@ export default function Board() {
           {renderBlock(2, [18,19,20,21,22,23,24,25,26])}
           {renderBlock(3, [27,28,29,30,31,32,33,34,35])}
         </div>
+        <h3>{renderDialogue()}</h3>
         {renderRotateBox()}
-        <div className="status">{winnerStatus()}</div>
+        <div className="status">{calculateWinner(circles)}</div>
       </Container>
     </div>
   )
