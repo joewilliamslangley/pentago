@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Circle from './Circle'
 import Block from './Block'
 import Board from './Board'
+import WinMessage from './WinMessage'
 import './Game.css'
 import { winningLines } from './winner'
 import { Container } from 'react-bootstrap'
@@ -127,13 +128,13 @@ export default function Game() {
 
   const renderDialogue = () => {
     if (winStatus) {
-      return `${blackIsNext ? 'Black' : 'White'} wins!`
+      return `${blackIsNext ? 'White' : 'Black'} wins!`
     } else if (rotateNext && selectedBlock === null) {
       return "Choose a block to rotate"
     } else if (rotateNext && selectedBlock !== null) {
       return "Pick a rotation direction or choose a different block"
     } else {
-      return `${blackIsNext ? 'White' : 'Black'}'s turn to move`
+      return `${blackIsNext ? 'Black' : 'White'}'s turn to move`
     }
   }
 
@@ -143,6 +144,7 @@ export default function Game() {
         <Board renderBlock={renderBlock} />
         <h3>{renderDialogue()}</h3>
         {renderRotateBox()}
+        {winStatus ? <WinMessage /> : null}
       </Container>
     </div>
   )
