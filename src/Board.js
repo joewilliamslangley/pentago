@@ -29,7 +29,6 @@ export default function Board() {
   }
 
   const handleBlockClick = blockNum => {
-    console.log(blockNum)
     setSelectedBlock(blockNum)
   }
 
@@ -86,9 +85,9 @@ export default function Board() {
     if (rotateNext && selectedBlock !== null) {
       return (
       <div className='rotate-box'>
-        <button className='rotate-left' onClick={() => rotateBlock('anticlockwise')}>Rotate left</button>
+        <button className='rotate-left' onClick={() => rotateBlock('anticlockwise')}>Rotate anticlockwise</button>
         {renderSkipRotate()}
-        <button className='rotate-right' onClick={() => rotateBlock('clockwise')}>Rotate right</button>
+        <button className='rotate-right' onClick={() => rotateBlock('clockwise')}>Rotate clockwise</button>
       </div>
       )
     } else if (rotateNext) {
