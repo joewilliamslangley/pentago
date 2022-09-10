@@ -3,6 +3,7 @@ import Circle from './Circle'
 import Block from './Block'
 import Board from './Board'
 import WinMessage from './WinMessage'
+import { Button } from 'react-bootstrap'
 import './Game.css'
 import { winningLines } from './winner'
 
@@ -84,9 +85,9 @@ export default function Game() {
     } else if (rotateNext && selectedBlock !== null) {
       return (
       <div className='rotate-box'>
-        <button className='rotate-left' onClick={() => rotateBlock('anticlockwise')}>Rotate anticlockwise</button>
+        <Button className='rotate-left' onClick={() => rotateBlock('anticlockwise')}>Rotate anticlockwise</Button>
         {renderSkipRotate()}
-        <button className='rotate-right' onClick={() => rotateBlock('clockwise')}>Rotate clockwise</button>
+        <Button className='rotate-right' onClick={() => rotateBlock('clockwise')}>Rotate clockwise</Button>
       </div>
       )
     } else if (rotateNext) {
@@ -108,7 +109,7 @@ export default function Game() {
     })
     if (anyBlocksEmpty && !winStatus){
     return (
-      <button className='skip' onClick={() => handleSkip()}>Skip</button>
+      <Button variant="secondary" className='skip' onClick={() => handleSkip()}>Skip</Button>
     )
     }
   }
