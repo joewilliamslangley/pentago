@@ -30,10 +30,6 @@ export default function Game() {
     setRotateNext(!rotateNext)
   }
 
-  const handleBlockClick = blockNum => {
-    setSelectedBlock(blockNum)
-  }
-
   const renderBlock = (blockNum, circles) => {
     let blockStatus
     if (rotateNext && selectedBlock === null) {
@@ -43,7 +39,7 @@ export default function Game() {
     }
     return (
       <Block
-        onClick={() => handleBlockClick(blockNum)}
+        onClick={() => setSelectedBlock(blockNum)}
         blockNum={blockNum}
         circles={circles}
         renderCircle={renderCircle}
@@ -100,6 +96,11 @@ export default function Game() {
     }
   }
 
+  const handleSkip = () => {
+    setRotateNext(!rotateNext);
+    setSelectedBlock(null)
+  }
+
   const renderSkipRotate = () => {
     const blocks = [block1, block2, block3, block4]
     const anyBlocksEmpty = blocks.some(block => {
@@ -107,7 +108,7 @@ export default function Game() {
     })
     if (anyBlocksEmpty && !winStatus){
     return (
-      <button className='skip' onClick={() => setRotateNext(!rotateNext)}>Skip</button>
+      <button className='skip' onClick={() => handleSkip()}>Skip</button>
     )
     }
   }
