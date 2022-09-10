@@ -4,7 +4,6 @@ import Game from './Game';
 function App() {
   return (
     <div className="App">
-      <h1>Pentago</h1>
       <Game />
     </div>
   );

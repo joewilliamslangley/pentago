@@ -5,7 +5,6 @@ import Board from './Board'
 import WinMessage from './WinMessage'
 import './Game.css'
 import { winningLines } from './winner'
-import { Container } from 'react-bootstrap'
 
 export default function Game() {
   const [circles, setCircles] = useState(Array(36).fill(null))
@@ -138,14 +137,20 @@ export default function Game() {
     }
   }
 
+  const resetGame = () => {
+    setCircles(Array(36).fill(null))
+    setblackIsNext(true)
+    setRotateNext(false)
+    setSelectedBlock(null)
+    setWinStatus(false)
+  }
+
   return (
     <div className="game">
-      <Container className="game-container">
-        <Board renderBlock={renderBlock} />
-        <h3>{renderDialogue()}</h3>
-        {renderRotateBox()}
-        {winStatus ? <WinMessage /> : null}
-      </Container>
+      <Board renderBlock={renderBlock} />
+      <h3>{renderDialogue()}</h3>
+      {renderRotateBox()}
+      {winStatus ? <WinMessage winner={blackIsNext ? 'White' : 'Black'} resetGame={resetGame} /> : null}
     </div>
   )
 }
