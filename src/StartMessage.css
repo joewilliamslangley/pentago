@@ -1,0 +1,24 @@
+.start-message {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.75);
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.start-message-content {
+  background-color: white;
+  padding: 30px 70px;
+}
+
+.start-message-content > h1 {
+  font-size: 60px;
+}
+
+.start-message-content > .btn {
+  margin: 4px;
+}

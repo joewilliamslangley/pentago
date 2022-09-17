@@ -3,11 +3,13 @@ import Circle from './Circle'
 import Block from './Block'
 import Board from './Board'
 import WinMessage from './WinMessage'
+import StartMessage from './StartMessage'
 import { Button, Row, Col } from 'react-bootstrap'
 import './Game.css'
 import { winningLines } from './winner'
 
 export default function Game() {
+  const [gameStart, setGameStart] = useState(false)
   const [circles, setCircles] = useState(Array(36).fill(null))
   const [blackIsNext, setblackIsNext] = useState(true)
   const [rotateNext, setRotateNext] = useState(false)
@@ -156,6 +158,7 @@ export default function Game() {
 
   return (
     <div className="game">
+      {!gameStart ? <StartMessage startGame={setGameStart}/> : null}
       <Board renderBlock={renderBlock} />
       <div className='user-interaction'>
         <h3>{renderDialogue()}</h3>
