@@ -3,7 +3,7 @@ import Circle from './Circle'
 import Block from './Block'
 import Board from './Board'
 import WinMessage from './WinMessage'
-import { Button } from 'react-bootstrap'
+import { Button, Row, Col } from 'react-bootstrap'
 import './Game.css'
 import { winningLines } from './winner'
 
@@ -85,9 +85,17 @@ export default function Game() {
     } else if (rotateNext && selectedBlock !== null) {
       return (
       <div className='rotate-box'>
-        <Button className='rotate-left' onClick={() => rotateBlock('anticlockwise')}>Rotate anticlockwise</Button>
-        {renderSkipRotate()}
-        <Button className='rotate-right' onClick={() => rotateBlock('clockwise')}>Rotate clockwise</Button>
+        <Row className="justify-content-md-center rotate-buttons-row">
+          <Col sm md='auto' className='rotate-button-col'>
+            <Button className='rotate-left' onClick={() => rotateBlock('anticlockwise')}>Rotate anticlockwise</Button>
+          </Col>
+          <Col sm md='auto' className='rotate-button-col'>
+            <Button className='rotate-right' onClick={() => rotateBlock('clockwise')}>Rotate clockwise</Button>
+          </Col>
+          <Col sm md='auto' className='rotate-button-col'>
+            {renderSkipRotate()}
+          </Col>
+        </Row>
       </div>
       )
     } else if (rotateNext) {
@@ -128,9 +136,9 @@ export default function Game() {
 
   const renderDialogue = () => {
     if (winStatus) {
-      return `${blackIsNext ? 'White' : 'Black'} wins!`
+      return
     } else if (rotateNext && selectedBlock === null) {
-      return "Choose a block to rotate"
+      return "Click a block to rotate"
     } else if (rotateNext && selectedBlock !== null) {
       return "Pick a rotation direction or choose a different block"
     } else {
@@ -149,8 +157,10 @@ export default function Game() {
   return (
     <div className="game">
       <Board renderBlock={renderBlock} />
-      <h3>{renderDialogue()}</h3>
-      {renderRotateBox()}
+      <div className='user-interaction'>
+        <h3>{renderDialogue()}</h3>
+        {renderRotateBox()}
+      </div>
       {winStatus ? <WinMessage winner={blackIsNext ? 'White' : 'Black'} resetGame={resetGame} /> : null}
     </div>
   )
